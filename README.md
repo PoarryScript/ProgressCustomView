@@ -1,6 +1,8 @@
 # ProgressCustomView
-device-2017-04-01-165934.png
 
-Usage:
-normal show progress with setValue(int value) method
+![](http://i.imgur.com/Pn1FEOp.png)
+
+**Usage**:
+
+  normal show progress with `setValue(int value)` method
  
