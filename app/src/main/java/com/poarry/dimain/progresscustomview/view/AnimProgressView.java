@@ -13,7 +13,7 @@ import com.poarry.dimain.progresscustomview.R;
 /**
  * Created by j-yangbo on 2017/4/1.
  */
-public class ProgressView extends View {
+public class AnimProgressView extends View {
     public static final String DEBUG_LOG_TAG = "LOG_TAG";
     private static final boolean DEBUGABLE = true;
     private int mWidth, mHeight;
@@ -21,6 +21,7 @@ public class ProgressView extends View {
     private int mBgColor;
     private int mFrontColor;
     private Paint mPaint;
+
     /**
      * get progress value use defaultValue or from {@link #setValue(int)} ;
      */
@@ -31,15 +32,18 @@ public class ProgressView extends View {
      */
     private double drawValue;
 
-    public ProgressView(Context context) {
+
+    private int accelerator = 0;
+
+    public AnimProgressView(Context context) {
         this(context, null);
     }
 
-    public ProgressView(Context context, AttributeSet attrs) {
+    public AnimProgressView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ProgressView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public AnimProgressView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ProgressView);
         mWidth = (int) array.getDimension(R.styleable.ProgressView_width, getResources().getDimension(R.dimen.progress_view_default_width));
@@ -57,14 +61,6 @@ public class ProgressView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-       /* Log.d(DEBUG_LOG_TAG, "height" + mHeight);
-        Log.d(DEBUG_LOG_TAG, "width" + mWidth);
-        mWidth = getMeasuredWidth();
-        mHeight = getMeasuredHeight();
-        if (DEBUGABLE) {
-            Log.d(DEBUG_LOG_TAG, "onMeasure width" + mWidth);
-            Log.d(DEBUG_LOG_TAG, "onMeasure height" + mHeight);
-        }*/
     }
 
     @Override
@@ -100,17 +96,23 @@ public class ProgressView extends View {
             if (DEBUGABLE) {
                 Log.d(DEBUG_LOG_TAG, "onDraw drawValue" + drawValue);
             }
-            if (drawValue>mWidth){
+            if (drawValue > mWidth) {
                 drawValue = mWidth;
             }
+            if (drawValue - accelerator > 10) {
+                accelerator += 10;
+            } else {
+                accelerator = (int) drawValue;
+            }
+            postInvalidateDelayed(6L);
             canvas.drawCircle(mRoundAngle, mRoundAngle, mRoundAngle, mPaint);
-            canvas.drawRect(mRoundAngle, 0, (float) (drawValue - 2 * mRoundAngle), mHeight, mPaint);
-            canvas.drawCircle((float) (drawValue - 2 * mRoundAngle), mRoundAngle, mRoundAngle, mPaint);
+            canvas.drawRect(mRoundAngle, 0, (float) (accelerator - 2 * mRoundAngle), mHeight, mPaint);
+            canvas.drawCircle((float) (accelerator - 2 * mRoundAngle), mRoundAngle, mRoundAngle, mPaint);
         }
     }
 
     public void setValue(int mValue) {
         this.mValue = mValue;
-        invalidate();
+        accelerator = 0;
     }
 }

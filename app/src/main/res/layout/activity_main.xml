@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -17,9 +17,19 @@
     <com.poarry.dimain.progresscustomview.view.ProgressView
             android:layout_width="wrap_content"
             app:height="20dp"
+            android:id="@+id/normal_progress"
             app:width="300dp"
             app:round_angle="40dp"
             android:layout_height="wrap_content"/>
 
 
-</LinearLayout>
+    <com.poarry.dimain.progresscustomview.view.AnimProgressView
+            android:layout_width="wrap_content"
+            app:height="20dp"
+            app:width="300dp"
+            android:id="@+id/anim_progress"
+            android:layout_marginTop="40dp"
+            app:round_angle="40dp"
+            android:layout_height="20dp"/>
+
+</RelativeLayout>

@@ -6,5 +6,5 @@
     <dimen name="progress_view_default_width">200dp</dimen>
     <dimen name="progress_view_default_height">30dp</dimen>
     <dimen name="progress_view_default_angle">15dp</dimen>
-    <integer name="progress_view_default_value">12</integer>
+    <integer name="progress_view_default_value">80</integer>
 </resources>
