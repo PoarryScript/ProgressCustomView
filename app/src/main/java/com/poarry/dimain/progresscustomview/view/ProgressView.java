@@ -22,6 +22,7 @@ public class ProgressView extends View {
     private int mFrontColor;
     private Paint mPaint;
     private int mValue = 0;
+    private double drawValue;//transform #mValue range from 0 to 100;
 
     public ProgressView(Context context) {
         this(context, null);
@@ -77,18 +78,23 @@ public class ProgressView extends View {
         }
 
         mPaint.setColor(mFrontColor);
-        if (mValue < mHeight / 2) {
-            mRoundAngle = mValue / 2;
-            canvas.drawCircle(mRoundAngle, mRoundAngle, mRoundAngle, mPaint);
+        //get proportion
+        drawValue = (mWidth * mValue) / 100;
+        if (drawValue < mHeight / 2) {
+            mRoundAngle = (int) (drawValue / 2);
+            canvas.drawCircle(mRoundAngle, mHeight / 2, mRoundAngle, mPaint);
             mPaint.setColor(mBgColor);
             canvas.drawRect(mRoundAngle, 0, mRoundAngle * 2, mRoundAngle * 2, mPaint);
         } else {
             mRoundAngle = mHeight / 2;
             mPaint.setColor(mFrontColor);
 
-            double drawValue = (mWidth * mValue) / 100;
+
             if (DEBUGABLE) {
                 Log.d(DEBUG_LOG_TAG, "onDraw drawValue" + drawValue);
+            }
+            if (drawValue>mWidth){
+                drawValue = mWidth;
             }
             canvas.drawCircle(mRoundAngle, mRoundAngle, mRoundAngle, mPaint);
             canvas.drawRect(mRoundAngle, 0, (float) (drawValue - 2 * mRoundAngle), mHeight, mPaint);
